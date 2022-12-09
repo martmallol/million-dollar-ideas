@@ -22,7 +22,7 @@ DESCRIBE users;
 CREATE TABLE links (
     id INT(11) NOT NULL,
     title VARCHAR(150) NOT NULL,
-    url VARCHAR(255) NOT NULL,
+    money INT(20) NOT NULL,
     description TEXT,
     user_id INT(11),
     created_at timestamp NOT NULL DEFAULT current_timestamp, -- It autogenerates with the current timestamo
