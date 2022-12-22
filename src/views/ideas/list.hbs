@@ -1,6 +1,5 @@
 <div class="container p-4">
     <div class="row">
-        {{!-- Each element of the ideas Table from databes_links DB --}}
         {{#each ideas}}
         <div class="col-md-3">
             <div class="card text-center">
@@ -8,11 +7,27 @@
                     <h3 class="card-title text-uppercase">
                         {{title}}
                     </h3>
-                    <h4>{{money}}</h4>
-                    <p class="m-2"> {{description}} </p>
-                    <a href="" class="btn btn-danger">Delete Idea</a>
-                    <a href="" class="btn btn-secondary">Edit</a>
+                    <h4>
+                        Expected gains: ${{money}}
+                    </h4>
+                    <p class="m-2">{{description}}</p>
+                    <p class="text-muted">
+                        {{timeago created_at}}
+                    </p>
+                    <a class="btn btn-danger" href="/ideas/delete/{{id}}">
+                        Delete Link
+                    </a>
+                    <a class="btn btn-secondary" href="/ideas/edit/{{id}}">
+                        Edit
+                    </a>
                 </div>
+            </div>
+        </div>
+        {{else}}
+        <div class="col-md-4 mx-auto">
+            <div class="card card-body text-center">
+                <p>There are not Ideas saved yet.</p>
+                <a href="/ideas/add">Create One!</a>
             </div>
         </div>
         {{/each}}
