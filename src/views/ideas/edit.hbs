@@ -1,0 +1,49 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    {{!-- NEW --}}
+                    <form action="/ideas/edit/{{idea.id}}" method="POST">
+                        <div class="form-group">
+                             <input type="text" 
+                             name="title" 
+                             class="form-control" 
+                             placeholder="Title" 
+                             value= '{{idea.title}}' 
+                             autofocus>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group mb-3">    
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                </div>
+                                <input type="number" 
+                                    class="form-control" 
+                                    {{!-- NEW --}}
+                                    value = '{{ idea.money }}'
+                                    name="money"
+                                    placeholder="Expected gains">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="description" 
+                                      rows="2" 
+                                      class="form-control"
+                                      {{!-- NEW --}} 
+                                      placeholder="Idea description">{{ idea.description }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success btn-block">
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
