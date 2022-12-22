@@ -38,4 +38,12 @@ router.get('/', async (req, res) => { // Why is it important to do async?
     res.render('ideas/list', { ideas: ideas });
 });
 
+// Delete the idea with that id
+router.get('/delete/:id', async (req, res) => {
+    console.log(req.params.id); // Check if it send me the id
+    const { id } = await req.params;
+    pool.query('DELETE FROM ideas WHERE ID = ?', [id]);
+    res.redirect('/ideas'); // After deleting the idea, we get redirected to the main page again
+});
+
 module.exports = router;
