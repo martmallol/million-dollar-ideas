@@ -2,6 +2,11 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const exphbs = require('express-handlebars');
+const flash = require('connect-flash');
+const session = require('express-session'); // Store data in the server memory (necessary for flash to work)
+const MySQLStore = require('express-mysql-session'); // Save session on DB instead of server memory
+
+const { database } = require('./keys'); // My Project's DB
 
 // Initialize express
 const app = express();
@@ -24,10 +29,18 @@ app.set('view engine', '.hbs');  // Utilize the previous engine
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false})); // It only accepts simple form inputs, not images
 app.use(express.json()); // Send & receive jsons
+// Configure session
+app.use(session({
+    secret: 'martmysqlsession',
+    resave: false,
+    saveUninitialized: false,
+    store: new MySQLStore(database) // Store in my Project's DB
+}));
+app.use(flash()); // Middleware for sending messages
 
 // Global variables
 app.use((req, res, next) => {
-
+    app.locals.success = req.flash("success");
     next();
 })
 

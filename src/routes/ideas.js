@@ -22,7 +22,11 @@ router.post('/add', async (req, res) => { // Why is it important to do async?
     // This petition will take time, that's why I include await
     // Adding the petition into the 'ideas' table in my database
     await pool.query('INSERT INTO ideas set ?', [newIdea]);
-    res.send('received');
+    
+    // Send msg
+    req.flash('success', 'Idea saved succesfully.')
+    // After editing, redirect to the main page
+    res.redirect('/ideas');
 });
 
 // Search for 'localhost:4000/ideas/'
@@ -43,6 +47,8 @@ router.get('/delete/:id', async (req, res) => {
     console.log(req.params.id); // Check if it send me the id
     const { id } = req.params;
     await pool.query('DELETE FROM ideas WHERE ID = ?', [id]);
+    // Send msg
+    req.flash('success', 'Idea removed succesfully.');
     res.redirect('/ideas'); // After deleting the idea, we get redirected to the main page again
 });
 
@@ -55,6 +61,7 @@ router.get('/edit/:id', async (req, res) => {
     res.render('ideas/edit', {idea: idea[0]}); // Similar to the 'add' page
 });
 
+// POST request after editing the idea
 router.post('/edit/:id', async (req, res) => {
     const { id } = req.params;
     const { title, money, description } = req.body;
@@ -65,6 +72,8 @@ router.post('/edit/:id', async (req, res) => {
     };
     // Update table on DB
     pool.query('UPDATE ideas set ? WHERE id = ?', [newIdea, id]);
+    // Send msg
+    req.flash('success', 'Idea updated succesfully.');
     // After editing, redirect to the main page
     res.redirect('/ideas');
 })
