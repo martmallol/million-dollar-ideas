@@ -18,8 +18,8 @@ ALTER TABLE users
 
 DESCRIBE users;
 
--- Links table
-CREATE TABLE links (
+-- Ideas table
+CREATE TABLE ideas (
     id INT(11) NOT NULL,
     title VARCHAR(150) NOT NULL,
     money INT(20) NOT NULL,
@@ -29,11 +29,11 @@ CREATE TABLE links (
     CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
-ALTER TABLE links  
+ALTER TABLE ideas  
     ADD PRIMARY KEY (id);
 
 
-ALTER TABLE links
+ALTER TABLE ideas
     MODIFY id INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 2;
 
-DESCRIBE links;
+DESCRIBE ideas;

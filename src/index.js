@@ -34,7 +34,7 @@ app.use((req, res, next) => {
 // Routes (urls of our server)
 app.use(require('./routes')); // Import 'routes'
 app.use(require('./routes/authentication')); // Import 'authentication'
-app.use('/links', require('./routes/links')); // Import 'links'
+app.use('/ideas', require('./routes/ideas')); // Import 'ideas'
 
 // Public
 
