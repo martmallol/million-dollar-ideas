@@ -1,15 +1,18 @@
 const express = require('express');
 const router = express.Router();
-
 const pool = require('../database'); // Connect DB
+// "Check if a user is authenticated or not" method
+const { isLoggedIn } = require('../lib/auth'); 
+
+// Every route is protected with 'isLoggedIn'!!
 
 // Search for 'localhost:4000/ideas/add'
-router.get('/add', (req, res) => {
+router.get('/add', isLoggedIn, (req, res) => {
     res.render('ideas/add');
 });
 
 // Complete a multi-million dollar idea form and save it.
-router.post('/add', async (req, res) => { // Why is it important to do async? 
+router.post('/add', isLoggedIn, async (req, res) => { // Why is it important to do async? 
     /* "Cuando enviamos una requisición de datos a una API, tenemos la promesa de que 
     estos datos llegarán, pero hasta que eso suceda, el sistema debe seguir funcionando"*/
     const { title, money, description } = req.body;
@@ -30,7 +33,7 @@ router.post('/add', async (req, res) => { // Why is it important to do async?
 });
 
 // Search for 'localhost:4000/ideas/'
-router.get('/', async (req, res) => { // Why is it important to do async?
+router.get('/', isLoggedIn, async (req, res) => { // Why is it important to do async?
     /* "Cuando enviamos una requisición de datos a una API, tenemos la promesa de que 
     estos datos llegarán, pero hasta que eso suceda, el sistema debe seguir funcionando"*/
 
@@ -43,7 +46,7 @@ router.get('/', async (req, res) => { // Why is it important to do async?
 });
 
 // Delete the idea with that id
-router.get('/delete/:id', async (req, res) => {
+router.get('/delete/:id', isLoggedIn, async (req, res) => {
     console.log(req.params.id); // Check if it send me the id
     const { id } = req.params;
     await pool.query('DELETE FROM ideas WHERE ID = ?', [id]);
@@ -53,7 +56,7 @@ router.get('/delete/:id', async (req, res) => {
 });
 
 // Edit the idea with that id
-router.get('/edit/:id', async (req, res) => {
+router.get('/edit/:id', isLoggedIn, async (req, res) => {
     const { id } = req.params;
     console.log(id);
     const idea = await pool.query('SELECT * FROM ideas WHERE id = ?', [id]);
@@ -62,7 +65,7 @@ router.get('/edit/:id', async (req, res) => {
 });
 
 // POST request after editing the idea
-router.post('/edit/:id', async (req, res) => {
+router.post('/edit/:id', isLoggedIn, async (req, res) => {
     const { id } = req.params;
     const { title, money, description } = req.body;
     const newIdea = { // The body of the object I'm sending
