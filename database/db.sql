@@ -16,6 +16,10 @@ ALTER TABLE users
 ALTER TABLE users
     MODIFY id INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 2;
 
+ALTER TABLE users
+    -- Hash support
+    MODIFY password VARCHAR(64) NOT NULL;
+
 DESCRIBE users;
 
 -- Ideas table

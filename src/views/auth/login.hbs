@@ -1,15 +1,16 @@
+{{!-- Pretty similar to the 'Sign Up' page --}}
+
 <div class="container p-4">
     <div class="row">
         <div class="col-md-4 mx-auto">
             <div class="card text-center">
                 <div class="card-header">
-                    <h3>Sign Up</h3>
+                    <h3>Log In</h3>
                 </div>
+                {{!-- Why is not showing?!--}}
+                <img src="/public/img/homer.png" alt="Rich Homer" class="card-img-top mx-auto m-2 rounded-circle w-50">
                 <div class="card-body">
-                    <form action="/signup" method="POST">
-                        <div class="form-group">
-                            <input type="text" name="fullname" placeholder="Full Name" class="form-control" autofocus>
-                        </div>
+                    <form action="/login" method="POST">
                         <div class="form-group">
                             <input type="text" name="username" placeholder="Username" class="form-control">
                         </div>
@@ -18,7 +19,7 @@
                         </div>
                         <div class="form-group">
                             <button class="btn btn-success btn-block">
-                                Sign Up!
+                                Log In!
                             </button>
                         </div>
                     </form>

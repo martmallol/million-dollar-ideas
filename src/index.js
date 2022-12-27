@@ -41,11 +41,12 @@ app.use(session({
 app.use(flash()); // Middleware for sending messages
 app.use(passport.initialize());
 app.use(passport.session());
-
+// app.use(express.static('public/img'));
 
 // Global variables
 app.use((req, res, next) => {
     app.locals.success = req.flash("success");
+    app.locals.message = req.flash("message");
     next();
 })
 
@@ -53,6 +54,8 @@ app.use((req, res, next) => {
 app.use(require('./routes')); // Import 'routes'
 app.use(require('./routes/authentication')); // Import 'authentication'
 app.use('/ideas', require('./routes/ideas')); // Import 'ideas'
+
+
 
 // Public
 
