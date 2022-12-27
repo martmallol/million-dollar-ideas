@@ -5,11 +5,13 @@ const exphbs = require('express-handlebars');
 const flash = require('connect-flash');
 const session = require('express-session'); // Store data in the server memory (necessary for flash to work)
 const MySQLStore = require('express-mysql-session'); // Save session on DB instead of server memory
+const passport = require('passport');
 
 const { database } = require('./keys'); // My Project's DB
 
 // Initialize express
 const app = express();
+require('./lib/passport');
 
 // If the port exists, take it. If it doesn't, use 4000 as the port.
 const PORT = process.env.PORT ||4000;
@@ -37,6 +39,9 @@ app.use(session({
     store: new MySQLStore(database) // Store in my Project's DB
 }));
 app.use(flash()); // Middleware for sending messages
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 // Global variables
 app.use((req, res, next) => {
