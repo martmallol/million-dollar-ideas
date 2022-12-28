@@ -20,7 +20,8 @@ router.post('/add', isLoggedIn, async (req, res) => { // Why is it important to 
     const newIdea = { // The body of the object I'm sending
         title,
         money,
-        description
+        description,
+        user_id: req.user.id
     };
     // This petition will take time, that's why I include await
     // Adding the petition into the 'ideas' table in my database
@@ -40,7 +41,7 @@ router.get('/', isLoggedIn, async (req, res) => { // Why is it important to do a
     /*Al definir una función como async, podemos usar la palabra clave await antes de 
     cualquier expresión que retorne una promesa. De esta forma, la ejecución de la 
     función externa (la función async) se pausará hasta que se resuelva la Promesa. */
-    const ideas = await pool.query('SELECT * FROM ideas');
+    const ideas = await pool.query('SELECT * FROM ideas WHERE user_id = ?', [req.user.id]);
     console.log(ideas);
     res.render('ideas/list', { ideas: ideas });
 });

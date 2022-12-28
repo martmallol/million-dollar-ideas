@@ -42,6 +42,8 @@ app.use(flash()); // Middleware for sending messages
 app.use(passport.initialize());
 app.use(passport.session());
 // app.use(express.static('public/img'));
+// Render css styles (solved by: https://forum.freecodecamp.org/t/loading-css-file-on-front-end-solved/25550/3)
+app.use(express.static(path.join(__dirname, '/public')));
 
 // Global variables
 app.use((req, res, next) => {
@@ -64,3 +66,9 @@ app.use('/ideas', require('./routes/ideas')); // Import 'ideas'
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
 });
+
+// Rendering css styles
+/*app.get('/css/styles.css', function(req, res){ 
+    res.send('css/styles.css'); 
+    //res.end(); 
+}); */
