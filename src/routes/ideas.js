@@ -89,7 +89,7 @@ router.post('/edit/:id', isLoggedIn, async (req, res) => {
     let lengthsCheck = helpers.maxLengthCheck(money, 20) && helpers.maxLengthCheck(title, 150);
     if(title && money && !isNaN(money) && lengthsCheck) {
         // Update table on DB
-        pool.query('UPDATE ideas set ? WHERE id = ?', [newIdea, id]);
+        await pool.query('UPDATE ideas set ? WHERE id = ?', [newIdea, id]);
         // Send msg
         req.flash('success', 'Idea updated succesfully.');
         
