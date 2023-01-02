@@ -23,14 +23,23 @@ router.post('/add', isLoggedIn, async (req, res) => { // Why is it important to 
         description,
         user_id: req.user.id
     };
-    // This petition will take time, that's why I include await
-    // Adding the petition into the 'ideas' table in my database
-    await pool.query('INSERT INTO ideas set ?', [newIdea]);
+
+    if(title && money && !isNaN(money)) {
+        // This petition will take time, that's why I include await
+        // Adding the petition into the 'ideas' table in my database
+        await pool.query('INSERT INTO ideas set ?', [newIdea]);
     
-    // Send msg
-    req.flash('success', 'Idea saved succesfully.')
-    // After editing, redirect to the main page
-    res.redirect('/ideas');
+        // Send msg
+        req.flash('success', 'Idea saved succesfully.');
+
+        // After adding the idea (or not), redirect to the main page
+        res.redirect('/ideas');
+    } else {
+        // Send msg
+        req.flash('message', 'Incorrect input.');
+        res.redirect('/ideas/add');
+        res.status(400);
+    }        
 });
 
 // Search for 'localhost:4000/ideas/'
@@ -42,7 +51,7 @@ router.get('/', isLoggedIn, async (req, res) => { // Why is it important to do a
     cualquier expresión que retorne una promesa. De esta forma, la ejecución de la 
     función externa (la función async) se pausará hasta que se resuelva la Promesa. */
     const ideas = await pool.query('SELECT * FROM ideas WHERE user_id = ?', [req.user.id]);
-    console.log(ideas);
+    // console.log(ideas);
     res.render('ideas/list', { ideas: ideas });
 });
 
@@ -74,12 +83,21 @@ router.post('/edit/:id', isLoggedIn, async (req, res) => {
         money,
         description
     };
-    // Update table on DB
-    pool.query('UPDATE ideas set ? WHERE id = ?', [newIdea, id]);
-    // Send msg
-    req.flash('success', 'Idea updated succesfully.');
-    // After editing, redirect to the main page
-    res.redirect('/ideas');
-})
+
+    if(title && money && !isNaN(money)) {
+        // Update table on DB
+        pool.query('UPDATE ideas set ? WHERE id = ?', [newIdea, id]);
+        // Send msg
+        req.flash('success', 'Idea updated succesfully.');
+        
+        // After editing, redirect to the main page
+        res.redirect('/ideas');
+    } else {
+        // Send msg
+        req.flash('message', 'Incorrect input.');
+        res.redirect(`/ideas/edit/${id}`);
+        res.status(400);
+    }
+});
 
 module.exports = router;

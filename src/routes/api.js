@@ -48,6 +48,7 @@ router.post('/api/users', async (req, res) => {
 });
 
 // Update a user
+router.put('/api/users');
 
 // Delete a user
 
