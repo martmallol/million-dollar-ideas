@@ -17,4 +17,10 @@ helpers.matchPassword = async (password, savedPassword) => {
     }
 };
 
+// Check that no input exceeds its maximum length
+helpers.maxLengthCheck = (object, maxLength) => {
+    return (JSON.stringify(object).length <= maxLength);
+};
+
+
 module.exports = helpers;

@@ -3,6 +3,7 @@ const router = express.Router();
 const pool = require('../database'); // Connect DB
 // "Check if a user is authenticated or not" method
 const { isLoggedIn } = require('../lib/auth'); 
+const helpers = require('../lib/helpers');
 
 // Every route is protected with 'isLoggedIn'!!
 
@@ -24,7 +25,8 @@ router.post('/add', isLoggedIn, async (req, res) => { // Why is it important to 
         user_id: req.user.id
     };
 
-    if(title && money && !isNaN(money)) {
+    let lengthsCheck = helpers.maxLengthCheck(money, 20) && helpers.maxLengthCheck(title, 150);
+    if(title && money && !isNaN(money) && lengthsCheck) {
         // This petition will take time, that's why I include await
         // Adding the petition into the 'ideas' table in my database
         await pool.query('INSERT INTO ideas set ?', [newIdea]);
@@ -84,7 +86,8 @@ router.post('/edit/:id', isLoggedIn, async (req, res) => {
         description
     };
 
-    if(title && money && !isNaN(money)) {
+    let lengthsCheck = helpers.maxLengthCheck(money, 20) && helpers.maxLengthCheck(title, 150);
+    if(title && money && !isNaN(money) && lengthsCheck) {
         // Update table on DB
         pool.query('UPDATE ideas set ? WHERE id = ?', [newIdea, id]);
         // Send msg

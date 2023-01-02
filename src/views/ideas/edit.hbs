@@ -8,6 +8,7 @@
                         <div class="form-group">
                              <input type="text" 
                              name="title" 
+                             maxlength="150"
                              class="form-control" 
                              placeholder="Title" 
                              value= '{{idea.title}}' 
@@ -23,6 +24,7 @@
                                     {{!-- NEW --}}
                                     value = '{{ idea.money }}'
                                     name="money"
+                                    maxlength="20"
                                     placeholder="Expected gains">
                                 <div class="input-group-append">
                                     <span class="input-group-text">.00</span>
