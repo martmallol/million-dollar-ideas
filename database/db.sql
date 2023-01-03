@@ -29,7 +29,7 @@ CREATE TABLE ideas (
     money INT(20) NOT NULL,
     description TEXT,
     user_id INT(11),
-    created_at timestamp NOT NULL DEFAULT current_timestamp, -- It autogenerates with the current timestamo
+    created_at timestamp NOT NULL DEFAULT current_timestamp, -- It autogenerates with the current timestamp
     CONSTRAINT fk_user FOREIGN KEY(user_id) REFERENCES users(id)
 );
 
